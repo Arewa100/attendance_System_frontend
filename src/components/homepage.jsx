@@ -1,11 +1,13 @@
+import NavBar from "./navBar"
 
 
 const Home = ()=> {
      
     return(
         <>
-        <div>
-            
+        <div className="mobile-screen: bg-pink-300 h-[1000px] xl:max-w-[1440px] m-auto">
+            <NavBar/>
+            <h1>help me</h1>
         </div>
         </>
     )
