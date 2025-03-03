@@ -1,8 +1,9 @@
 import Footer from "./footer"
 import NavBar from "./navBar"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Link, useNavigate } from "react-router-dom"
 import Button from "../resusables/button"
+import { useState } from "react"
 
 
 const AdminDashBoard = ()=> {
@@ -10,13 +11,40 @@ const AdminDashBoard = ()=> {
     const handleCancelButton = ()=> {
         navigate("/");
     }
-     
+
+
+     const[currentStateRegisterStudent, setState] = useState(false);
+     const[currentStateOfCheckAttendanceHistory, setStateOfAttendanceHistory] = useState(false);
+     const[cumulativeHistory, setCumulativeHistoryState] = useState(false);
+
+     const handleClick = ()=> {
+        setState((prevState)=>{
+            prevState = true
+            return(prevState);
+        })
+     }
+
+     const handleClickForAttendanceHistory = ()=> {
+        setStateOfAttendanceHistory((prevState)=>{
+            prevState = true
+            return(prevState);
+        })
+     }
+
+     const handleClickForCumulativeHistory = ()=> {
+        setCumulativeHistoryState((prevState)=>{
+            prevState = true
+            return(prevState);
+        })
+     }
+
     return(
         <>
         <div className="xl:max-w-[1440px] m-auto min-h-screen flex flex-col">
             <NavBar firstButtonText="Logout" secondButtonText="Home"/>
             <div className="w-full m-auto min-h-screen flex items-center justify-around">
-                <section className="relative bg-green-100 mobile-screen:w-full flex justify-center items-center">
+
+                <section className="relative mobile-screen:w-full flex justify-center items-center mb-10">
                     <div className="bg-[#1F3A1F] tablets:h-[490px] tablets:w-[600px] mobile-screen:w-full mobile-screen:h-[400px] bg-opacity-75 rounded-[12px] relative flex mt-[80px] justify-around shadow-radial-sm-less-noticeable">
             
                         <div className="absolute inset-0 bg-[url('src/assets/images/backImg.svg')] bg-center bg-no-repeat bg-[length:400px_400px] opacity-10 z-0 "></div>
@@ -25,9 +53,10 @@ const AdminDashBoard = ()=> {
 
                             <div className="bg-[#1F3A1F] tablets:h-[490px] tablets:w-full mobile-screen:w-full mobile-screen:h-[400px] bg-opacity-75 rounded-[12px]">
 
+
                                 <div className="h-6 w-full mt-2">
 
-                                    <motion.button whileTap={{scale:0.2}} onClick={handleCancelButton} className="tablets:ml-[570px] mobile-screen:ml-[290px] text-[#FDC800]">
+                                    <motion.button whileTap={{scale:0.2}} onClick={handleCancelButton} className="tablets:ml-[570px] mobile-screen:ml-[290px] text-[#FDC800] ">
                                         <svg className="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                         </svg>
@@ -35,16 +64,46 @@ const AdminDashBoard = ()=> {
 
                                 </div>
 
-                                <div className="h-10 w-full flex justify-around text-[#FDC800] font-medium text-[25px] font-roboto"><p>Dashboard</p></div>
-                                <div  className="h-[200px] mt-8 w-full flex flex-col justify-between items-center ">
-                                    <Button textContent="Register Student" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[15px] text-[#1c2312] font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)] "/>
-                                    <Button textContent="Check Attendance History" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[15px] text-[#1c2312] font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]"/>
-                                    <Button textContent="Cumulative History" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[15px] text-[#1c2312] font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]"/>
-
+                                <div className={`absolute w-full`}>
+                                    <AnimatePresence>
+                                        {currentStateRegisterStudent ? <motion.div className="bg-green-600 w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
+                                            <p>register Student</p>
+                                        </motion.div> : null}
+                                    </AnimatePresence>
+                            
                                 </div>
+
+                                <div className={`absolute w-full`}>
+                                    <AnimatePresence>
+                                        {currentStateOfCheckAttendanceHistory ? <motion.div className="bg-blue-500 w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
+                                            <p>attendance history</p>
+                                        </motion.div> : null}
+                                    </AnimatePresence>
+                            
+                                </div>
+
+                                <div className={`absolute w-full`}>
+                                    <AnimatePresence>
+                                        {cumulativeHistory ? <motion.div className="bg-purple-700 w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
+                                            <p>cumulative history</p>
+                                        </motion.div> : null}
+                                    </AnimatePresence>
+                            
+                                </div>
+
+                                <div className="h-10 w-full font-medium text-[25px] font-roboto text-green-950"><p></p></div>
+                                <AnimatePresence>
+                                    {!currentStateRegisterStudent != currentStateOfCheckAttendanceHistory != cumulativeHistory?
+                                    <motion.div  className="h-[200px] mt-8 w-full flex flex-col justify-between items-center">
+                                        <Button onClick={()=> handleClick()} textContent="Register Student" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[15px] text-green-950 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)] "/>
+                                        <Button onClick={()=> handleClickForAttendanceHistory()} textContent="Check Attendance History" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[15px] text-green-950 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]"/>
+                                        <Button onClick={()=> handleClickForCumulativeHistory()} textContent="Cumulative History" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[15px] text-green-950 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]"/>
+
+                                    </motion.div> : null}
+                                </AnimatePresence>
                             </div>
                             
-                        </div>
+                        </div> 
                     </div>
                 </section>
             </div>
