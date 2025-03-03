@@ -9,6 +9,7 @@ const LoginPage = ()=> {
     const handleCancelButton = ()=> {
         navigate("/");
     }
+    
     return(
         <>
           <div className="xl:max-w-[1440px] m-auto min-h-screen flex items-center justify-around">

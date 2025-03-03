@@ -1,7 +1,9 @@
 import Button from "../resusables/button"
 import { useNavigate } from "react-router-dom"
 
-const NavBar = ()=> {
+const NavBar = (props)=> {
+
+    const{firstButtonText, secondButtonText} = props;
 
     let navigate = useNavigate();
 
@@ -24,8 +26,8 @@ const NavBar = ()=> {
                     </div>
     
                     <div className=" tablets:w-[300px] tablets:h-full tablets:flex tablets:items-center tablets:gap-[20px] mobile-screen:hidden">
-                        <Button textContent="Login" style=" h-[42px] w-[100px] bg-[#FDC800] text-[17px] text-[#3A1B1B] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s]" onClick={handleLoginClick}/>
-                        <Button textContent="Sign Up" style="  h-[42px] w-[100px] bg-[#1F3A1F] text-[17px] text-[#FDC800] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#FDC800] hover:text-[#1F3A1F] transition duration-[0.1s] " onClick={handleSignUpClick}/>
+                        <Button textContent={firstButtonText} style=" h-[42px] w-[100px] bg-[#FDC800] text-[17px] text-[#3A1B1B] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s]" onClick={handleLoginClick}/>
+                        <Button textContent={secondButtonText} style="  h-[42px] w-[100px] bg-[#1F3A1F] text-[17px] text-[#FDC800] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#FDC800] hover:text-[#1F3A1F] transition duration-[0.1s] " onClick={handleSignUpClick}/>
 
                     </div>  
                 </div>
