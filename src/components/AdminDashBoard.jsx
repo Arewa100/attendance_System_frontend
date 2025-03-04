@@ -38,10 +38,25 @@ const AdminDashBoard = ()=> {
         })
      }
 
+     const handleBackButton = ()=> {
+        setState((prevState)=>{
+            prevState = false
+            return(prevState);
+        })
+        setStateOfAttendanceHistory((prevState)=>{
+            prevState = false
+            return(prevState);
+        })
+        setCumulativeHistoryState((prevState)=>{
+            prevState = false
+            return(prevState);
+        })
+     }
+
     return(
         <>
         <div className="xl:max-w-[1440px] m-auto min-h-screen flex flex-col">
-            <NavBar firstButtonText="Logout" secondButtonText="Home"/>
+            <NavBar firstButtonText="Logout" secondButtonText="Home" firstNavigation="/" secondNavigation="/"/>
             <div className="w-full m-auto min-h-screen flex items-center justify-around">
 
                 <section className="relative mobile-screen:w-full flex justify-center items-center mb-10">
@@ -55,19 +70,48 @@ const AdminDashBoard = ()=> {
 
 
                                 <div className="h-6 w-full mt-2">
+                                    <AnimatePresence>
+                                        {!currentStateRegisterStudent != currentStateOfCheckAttendanceHistory != cumulativeHistory?
+                                        <motion.button whileTap={{scale:0.2}} onClick={handleCancelButton} className="tablets:ml-[570px] mobile-screen:ml-[290px] text-[#FDC800] ">
+                                            <svg className="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                            </svg>
+                                        </motion.button>
+                                        : null}
+                                    </AnimatePresence>
 
-                                    <motion.button whileTap={{scale:0.2}} onClick={handleCancelButton} className="tablets:ml-[570px] mobile-screen:ml-[290px] text-[#FDC800] ">
-                                        <svg className="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                        </svg>
-                                    </motion.button>
+                                </div>
+
+                                {/* back arrow */}
+                                <div className="h-6 w-full">
+                                    <AnimatePresence>
+                                        {currentStateRegisterStudent == currentStateOfCheckAttendanceHistory == cumulativeHistory?
+                                        <motion.button whileTap={{scale:0.2}} onClick={handleBackButton} className="tablets:ml-[36px] mobile-screen:ml-[290px] text-[#FDC800] ">
+                                            <svg className="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                            </svg>
+                                        </motion.button>
+                                        : null}
+                                    </AnimatePresence>
 
                                 </div>
 
                                 <div className={`absolute w-full`}>
                                     <AnimatePresence>
-                                        {currentStateRegisterStudent ? <motion.div className="bg-green-600 w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
-                                            <p>register Student</p>
+                                        {currentStateRegisterStudent ? <motion.div className="w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
+                                        <div className="tablets:h-10 mobile-screen:h-2 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Register Student</p></div>
+                                            <div  className="tablets:h-[300px] mobile-screen:h-[250px] mt-4 w-full flex flex-col justify-between items-center ">
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Firstname"/>
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Lastname"/>
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Matric-Number"/>
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Card Identification Number"/>
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Department"/>
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Email"/>
+                                            </div>
+
+                                            <div className="h-[42px] w-full mt-4 flex justify-around items-center">
+                                                <Button textContent="submit" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md"/>
+                                            </div>
                                         </motion.div> : null}
                                     </AnimatePresence>
                             
@@ -75,8 +119,18 @@ const AdminDashBoard = ()=> {
 
                                 <div className={`absolute w-full`}>
                                     <AnimatePresence>
-                                        {currentStateOfCheckAttendanceHistory ? <motion.div className="bg-blue-500 w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
-                                            <p>attendance history</p>
+                                        {currentStateOfCheckAttendanceHistory ? <motion.div className=" w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
+                                        <div className="tablets:h-10 mobile-screen:h-2 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Check Attendance History</p></div>
+                                            <div  className="tablets:h-[200px] mobile-screen:h-[250px] mt-4 w-full flex flex-col justify-between items-center ">
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number"/>
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Starting Date"/>
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Ending Date"/>
+                                               
+                                            </div>
+
+                                            <div className="h-[42px] w-full mt-10 flex justify-around items-center">
+                                                <Button textContent="submit" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md"/>
+                                            </div>
                                         </motion.div> : null}
                                     </AnimatePresence>
                             
@@ -84,8 +138,18 @@ const AdminDashBoard = ()=> {
 
                                 <div className={`absolute w-full`}>
                                     <AnimatePresence>
-                                        {cumulativeHistory ? <motion.div className="bg-purple-700 w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
-                                            <p>cumulative history</p>
+                                        {cumulativeHistory ? <motion.div className=" w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
+                                        <div className="tablets:h-10 mobile-screen:h-2 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Cumulative History</p></div>
+                                            <div  className="tablets:h-[200px] mobile-screen:h-[250px] mt-4 w-full flex flex-col justify-between items-center ">
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number"/>
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Starting Date"/>
+                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Ending Date"/>
+                                               
+                                            </div>
+
+                                            <div className="h-[42px] w-full mt-10 flex justify-around items-center">
+                                                <Button textContent="submit" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md"/>
+                                            </div>
                                         </motion.div> : null}
                                     </AnimatePresence>
                             
@@ -95,9 +159,9 @@ const AdminDashBoard = ()=> {
                                 <AnimatePresence>
                                     {!currentStateRegisterStudent != currentStateOfCheckAttendanceHistory != cumulativeHistory?
                                     <motion.div  className="h-[200px] mt-8 w-full flex flex-col justify-between items-center">
-                                        <Button onClick={()=> handleClick()} textContent="Register Student" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[15px] text-green-950 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)] "/>
-                                        <Button onClick={()=> handleClickForAttendanceHistory()} textContent="Check Attendance History" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[15px] text-green-950 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]"/>
-                                        <Button onClick={()=> handleClickForCumulativeHistory()} textContent="Cumulative History" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[15px] text-green-950 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]"/>
+                                        <Button onClick={()=> handleClick()} textContent="Register Student" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[17px] text-purple-200 text-opacity-65 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)] "/>
+                                        <Button onClick={()=> handleClickForAttendanceHistory()} textContent="Check Attendance History" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[17px] text-purple-200 text-opacity-65 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]"/>
+                                        <Button onClick={()=> handleClickForCumulativeHistory()} textContent="Cumulative History" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[17px] text-purple-200 text-opacity-65 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]"/>
 
                                     </motion.div> : null}
                                 </AnimatePresence>

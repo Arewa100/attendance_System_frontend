@@ -7,7 +7,7 @@ const Home = ()=> {
     return(
         <>
         <div className="xl:max-w-[1440px] m-auto min-h-screen flex flex-col">
-            <NavBar firstButtonText="Login" secondButtonText="Sign Up"/>
+            <NavBar firstButtonText="Login" secondButtonText="Sign Up" firstNavigation="/login" secondNavigation="/signup"/>
             <section className="flex-grow relative">
                 <div className="h-full w-full relative flex items-center justify-around min-h-screen">
         

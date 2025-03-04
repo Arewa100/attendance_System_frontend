@@ -1,4 +1,5 @@
 import AdminDashBoard from "../components/AdminDashBoard";
+import AttendanceData from "../components/attendanceData";
 import Home from "../components/homepage";
 import LoginPage from "../components/loginpage";
 import SignUpPage from "../components/signup";
@@ -19,6 +20,10 @@ const routes = [
     {
         path:"/dashboard",
         element:<AdminDashBoard/>
+    },
+    {
+        path:"/attendance-record",
+        element:<AttendanceData/>
     }
 ]
 

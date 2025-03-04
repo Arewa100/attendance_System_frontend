@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom"
 
 const NavBar = (props)=> {
 
-    const{firstButtonText, secondButtonText} = props;
+    const{firstButtonText, secondButtonText, firstNavigation, secondNavigation} = props;
 
     let navigate = useNavigate();
 
     const handleLoginClick = ()=> {
-       navigate("login");
+       navigate(firstNavigation);
     }
     const handleSignUpClick = ()=> {
-        navigate("signup");
+        navigate(secondNavigation);
     }
 
     return(

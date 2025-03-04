@@ -32,12 +32,12 @@ const SignUpPage = ()=> {
 
                             </div>
 
-                            <div className="h-10 w-full flex justify-around text-[#FDC800] font-medium text-[25px] font-roboto"><p>Admin Signup</p></div>
+                            <div className="h-10 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Admin Signup</p></div>
                             <div  className="h-[200px] mt-8 w-full flex flex-col justify-between items-center ">
-                                <input className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Firstname"/>
-                                <input className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Lastname"/>
-                                <input className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Username"/>
-                                <input className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="password" placeholder="Enter Password" />
+                                <motion.input whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Firstname"/>
+                                <motion.input whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Lastname"/>
+                                <motion.input whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Username"/>
+                                <motion.input whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="password" placeholder="Enter Password" />
                             </div>
                             <div className="h-[42px] w-full mt-10 flex justify-around items-center">
                                 <Button textContent="Sign Up" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md"/>
