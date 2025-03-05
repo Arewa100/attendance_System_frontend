@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { useState } from "react"
 import apiClient from "../services/apiClient"
-import { ToastContainer, toast } from "react-toastify"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const LoginPage = ()=> {
 
@@ -31,6 +32,12 @@ const LoginPage = ()=> {
 
     const handleSubmit = async(e)=>{
         e.preventDefault()
+
+        if (!userData.username || !userData.password) {
+          toast.error("Please fill in all fields.");
+          setMessage("Please fill in all fields.");
+          return;
+      }
            const postData = async (data) => {
         try {
           const response = await apiClient.post('staff/login/', data);
@@ -61,7 +68,6 @@ const LoginPage = ()=> {
 
     return(
         <>
-        <ToastContainer/>
           <div className="xl:max-w-[1440px] m-auto min-h-screen flex items-center justify-around">
           <form action="#" onSubmit={handleSubmit}>
             <section className="relative">

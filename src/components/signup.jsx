@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"
 import { useState } from "react";
 import apiClient from "../services/apiClient";
+// import { toast } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css';
 
 const SignUpPage = ()=> {
 
