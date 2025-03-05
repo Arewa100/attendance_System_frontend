@@ -114,7 +114,7 @@ const AdminDashBoard = ()=> {
                 <section className="relative mobile-screen:w-full flex justify-center items-center mb-10">
                     <div className="bg-[#1F3A1F] tablets:h-[490px] tablets:w-[600px] mobile-screen:w-full mobile-screen:h-[400px] bg-opacity-75 rounded-[12px] relative flex mt-[80px] justify-around shadow-radial-sm-less-noticeable">
             
-                        <div className="absolute inset-0 bg-[url('src/assets/images/backImg.svg')] bg-center bg-no-repeat bg-[length:400px_400px] opacity-10 z-0 "></div>
+                        <div className="absolute inset-0 bg-[url('/backImg.svg')] bg-center bg-no-repeat bg-[length:400px_400px] opacity-10 z-0 "></div>
                 
                         <div className="relative z-10 tablets:w-[750px] mobile-screen:w-full h-[87px] flex justify-around">
 

@@ -21,7 +21,7 @@ const NavBar = (props)=> {
 
                 <div className=" mobile-screen:h-[40px] tablets:h-full flex justify-between items-center mobile-screen:max-w-full">
                     <div className="flex justify-between items-center  mobile-screen:h-full mobile-screen:ml-0 tablets:ml-[40px] gap-4">
-                        <img className="mobile-screen:h-10 tablets:h-[63px] " src="src/assets/images/logo.svg" alt="yabatech logo" />
+                        <img className="mobile-screen:h-10 tablets:h-[63px] " src="/logo.svg" alt="yabatech logo" />
                         <div className="  tablets:text-[24px] mobile-screen:text-[10px] text-[#FDC800] font-roboto ">Yabatech Student Attendance...</div>
                     </div>
     

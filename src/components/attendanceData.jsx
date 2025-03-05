@@ -9,7 +9,7 @@ const AttendanceData = ()=> {
             <section className="flex-grow relative">
                 <div className="h-full w-full relative flex justify-around min-h-screen ">
         
-                    <div className=" absolute inset-0 bg-[url('src/assets/images/backImg.svg')] bg-center bg-no-repeat bg-[length:400px_400px] opacity-10"></div>
+                    <div className=" absolute inset-0 bg-[url('/backImg.svg')] bg-center bg-no-repeat bg-[length:400px_400px] opacity-10"></div>
             
                     <div className="relative z-10 w-[750px] mb-8">
                         <h1 className="font-extralight text-[25px] text-center mt-5 text-[#1E1E1E] underline">Student Attendance Record</h1>
