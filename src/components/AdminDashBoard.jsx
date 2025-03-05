@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Link, useNavigate } from "react-router-dom"
 import Button from "../resusables/button"
 import { useState } from "react"
+import apiClient from "../services/apiClient"
 
 
 const AdminDashBoard = ()=> {
@@ -53,6 +54,57 @@ const AdminDashBoard = ()=> {
         })
      }
 
+
+
+    //  connecting it to the server
+    const userDetails = {
+        firstName: "",
+        lastName: "",
+        matricNumber:"",
+        cardId: "",
+        department:"",
+        email:""
+    }
+
+    const [userData, setData] = useState(userDetails);
+    const [message, setMessage] = useState("")
+    
+    function handleChange(event) {
+        const { name, value } = event.target;
+        setData((preVData)=> {
+          return {...preVData, [name]:value}  
+        })
+    }
+
+    console.log(userData);
+
+    const handleSubmitToRegisterStudent = async(e)=>{
+        e.preventDefault()
+           const postData = async (data) => {
+        try {
+          const response = await apiClient.post('staff/registerStudent/', data);
+          if(response.data.message === "Student registered successfully") {
+            window.alert("Student registered successfully")
+            
+          }
+        } catch (error) {
+          setMessage(error.response.data);
+        }
+      };
+
+      postData(userData);
+      
+      apiClient.interceptors.response.use(
+        response => response,
+        error => {
+          // console.error('Error response:', error);
+          // console.log(error)
+          return Promise.reject(error);
+        }
+      );
+          
+      }
+
     return(
         <>
         <div className="xl:max-w-[1440px] m-auto min-h-screen flex flex-col">
@@ -86,10 +138,13 @@ const AdminDashBoard = ()=> {
                                 <div className="h-6 w-full">
                                     <AnimatePresence>
                                         {currentStateRegisterStudent == currentStateOfCheckAttendanceHistory == cumulativeHistory?
-                                        <motion.button whileTap={{scale:0.2}} onClick={handleBackButton} className="tablets:ml-[36px] mobile-screen:ml-[290px] text-[#FDC800] ">
-                                            <svg className="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <motion.button whileTap={{scale:0.2}} onClick={handleBackButton}>
+                                            <div className="h-10 absolute  w-full flex justify-around text-red-600 text-[14px] font-medium"><p>{message}</p></div>
+                                            <div className="tablets:ml-[36px] mobile-screen:ml-[290px] text-[#FDC800]">
+                                            <svg className="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                             </svg>
+                                            </div>
                                         </motion.button>
                                         : null}
                                     </AnimatePresence>
@@ -97,24 +152,28 @@ const AdminDashBoard = ()=> {
                                 </div>
 
                                 <div className={`absolute w-full`}>
+                                    
                                     <AnimatePresence>
+                                    <form action="#" onSubmit={handleSubmitToRegisterStudent}>
                                         {currentStateRegisterStudent ? <motion.div className="w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
+                                        
                                         <div className="tablets:h-10 mobile-screen:h-2 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Register Student</p></div>
                                             <div  className="tablets:h-[300px] mobile-screen:h-[250px] mt-4 w-full flex flex-col justify-between items-center ">
-                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Firstname"/>
-                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Lastname"/>
-                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Matric-Number"/>
-                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Card Identification Number"/>
-                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Department"/>
-                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Email"/>
+                                                <motion.input name="firstName" onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Firstname"/>
+                                                <motion.input name="lastName" onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Lastname"/>
+                                                <motion.input name="matricNumber" onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Matric-Number"/>
+                                                <motion.input name="cardId" onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Card Identification Number"/>
+                                                <motion.input name="department" onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Department"/>
+                                                <motion.input name="email" onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Email"/>
                                             </div>
 
                                             <div className="h-[42px] w-full mt-4 flex justify-around items-center">
                                                 <Button textContent="submit" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md"/>
                                             </div>
                                         </motion.div> : null}
+                                        </form>
                                     </AnimatePresence>
-                            
+                                    
                                 </div>
 
                                 <div className={`absolute w-full`}>

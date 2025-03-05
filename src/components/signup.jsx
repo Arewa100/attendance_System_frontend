@@ -2,6 +2,8 @@ import Button from "../resusables/button"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"
+import { useState } from "react";
+import apiClient from "../services/apiClient";
 
 const SignUpPage = ()=> {
 
@@ -10,9 +12,55 @@ const SignUpPage = ()=> {
         navigate("/");
     }
 
+    const userDetails = {
+        firstname: "",
+        lastname: "",
+        username: "",
+        password: "",
+    }
+
+    const [userData, setData] = useState(userDetails);
+    const [message, setMessage] = useState("")
+    
+    function handleChange(event) {
+        const { name, value } = event.target;
+        setData((preVData)=> {
+          return {...preVData, [name]:value}  
+        })
+    }
+
+    const handleSubmit = async(e)=>{
+        e.preventDefault()
+           const postData = async (data) => {
+        try {
+          const response = await apiClient.post('staff/register/', data);
+          if(response.data.message === "Staff registered successfully!!!") {
+            window.alert("Staff registered successfully!!!")
+            navigate("/login");
+            
+          }
+        } catch (error) {
+          setMessage(error.response.data);
+        }
+      };
+
+      postData(userData);
+      
+      apiClient.interceptors.response.use(
+        response => response,
+        error => {
+          // console.error('Error response:', error);
+          // console.log(error)
+          return Promise.reject(error);
+        }
+      );
+          
+      }
+
     return(
         <>
           <div className="xl:max-w-[1440px] m-auto min-h-screen flex items-center justify-around">
+            <form action="#" onSubmit={handleSubmit} >
             <section className="relative">
                 <div className="bg-[#1F3A1F] h-[490px] w-[600px] bg-opacity-75 rounded-[12px] relative flex mt-[80px] justify-around shadow-radial-sm-less-noticeable">
         
@@ -33,14 +81,16 @@ const SignUpPage = ()=> {
                             </div>
 
                             <div className="h-10 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Admin Signup</p></div>
+                            <div className="h-10 w-full flex justify-around text-red-600 text-[14px] font-medium"><p>{message}</p></div>
+
                             <div  className="h-[200px] mt-8 w-full flex flex-col justify-between items-center ">
-                                <motion.input whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Firstname"/>
-                                <motion.input whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Lastname"/>
-                                <motion.input whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Username"/>
-                                <motion.input whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="password" placeholder="Enter Password" />
+                                <motion.input name="firstname" onChange={handleChange} whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Firstname"/>
+                                <motion.input name="lastname" onChange={handleChange} whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Lastname"/>
+                                <motion.input name="username" onChange={handleChange} whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Username"/>
+                                <motion.input name="password" onChange={handleChange} whileHover={{scale:1.03}} className="w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="password" placeholder="Enter Password" />
                             </div>
                             <div className="h-[42px] w-full mt-10 flex justify-around items-center">
-                                <Button textContent="Sign Up" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md"/>
+                                <Button type="submit" textContent="Sign Up" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md"/>
                             </div>
 
                             <div className="flex justify-around items-center mt-7">
@@ -51,6 +101,7 @@ const SignUpPage = ()=> {
                     </div>
                 </div>
             </section>
+            </form>
         </div>
         </>
     )

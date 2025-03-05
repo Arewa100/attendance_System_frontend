@@ -1,9 +1,9 @@
 const Button = (props)=> {
 
-    const{textContent, onClick, type, style} = props;
+    const{textContent, onClick, type, style, name} = props;
     return(
         <>
-            <button className={style} onClick={onClick} type={type}>{textContent}</button>
+            <button className={style} onClick={onClick} type={type} name={name}>{textContent}</button>
         </>
     )
 }
