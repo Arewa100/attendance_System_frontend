@@ -105,6 +105,34 @@ const AdminDashBoard = ()=> {
           
       }
 
+       const handleSubmitForAttendanceHistory = async(e)=>{
+        e.preventDefault()
+           const postData = async (data) => {
+        try {
+          const response = await apiClient.get('staff/getAttendanceHistory/', data);
+          console.log(response.data)
+        //   if(response.data.message === "Student registered successfully") {
+        //     window.alert("fetching attendance history...")
+            
+        //   }
+        } catch (error) {
+          setMessage(error.response.data);
+        }
+      };
+
+      postData(userData);
+      
+      apiClient.interceptors.response.use(
+        response => response,
+        error => {
+          // console.error('Error response:', error);
+          // console.log(error)
+          return Promise.reject(error);
+        }
+      );
+          
+      }
+
     return(
         <>
         <div className="xl:max-w-[1440px] m-auto min-h-screen flex flex-col">
@@ -178,12 +206,13 @@ const AdminDashBoard = ()=> {
 
                                 <div className={`absolute w-full`}>
                                     <AnimatePresence>
+                                        <form action="#" onSubmit={handleSubmitForAttendanceHistory}>
                                         {currentStateOfCheckAttendanceHistory ? <motion.div className=" w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
                                         <div className="tablets:h-10 mobile-screen:h-2 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Check Attendance History</p></div>
                                             <div  className="tablets:h-[200px] mobile-screen:h-[250px] mt-4 w-full flex flex-col justify-between items-center ">
-                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number"/>
-                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Starting Date"/>
-                                                <motion.input whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Ending Date"/>
+                                                <motion.input onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number"/>
+                                                <motion.input onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Starting Date"/>
+                                                <motion.input onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Ending Date"/>
                                                
                                             </div>
 
@@ -191,6 +220,7 @@ const AdminDashBoard = ()=> {
                                                 <Button textContent="submit" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md"/>
                                             </div>
                                         </motion.div> : null}
+                                        </form>
                                     </AnimatePresence>
                             
                                 </div>
