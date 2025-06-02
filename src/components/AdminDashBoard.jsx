@@ -66,6 +66,13 @@ const AdminDashBoard = ()=> {
         email:""
     }
 
+    const studentHistoryDetails = {
+        matricNumber: "",
+        startDate: "",
+        endDate: "",
+    }
+    const [historyData, setHistoryData] = useState(studentHistoryDetails);
+
     const [userData, setData] = useState(userDetails);
     const [message, setMessage] = useState("")
     
@@ -73,6 +80,14 @@ const AdminDashBoard = ()=> {
         const { name, value } = event.target;
         setData((preVData)=> {
           return {...preVData, [name]:value}  
+        })
+    }
+
+
+    const handleHistoryinput = (event) => {
+        const{name, value} = event.target;
+        setHistoryData((prevData)=> {
+            return {...prevData, [name]: value}
         })
     }
 
@@ -110,17 +125,17 @@ const AdminDashBoard = ()=> {
            const postData = async (data) => {
         try {
           const response = await apiClient.get('staff/getAttendanceHistory/', data);
-          console.log(response.data)
-        //   if(response.data.message === "Student registered successfully") {
-        //     window.alert("fetching attendance history...")
+        //   console.log(response.data)
+          if(response.data.message) {
+            window.alert("fetching attendance history...")
             
-        //   }
+          }
         } catch (error) {
           setMessage(error.response.data);
         }
       };
 
-      postData(userData);
+      postData(historyData);
       
       apiClient.interceptors.response.use(
         response => response,
@@ -210,9 +225,9 @@ const AdminDashBoard = ()=> {
                                         {currentStateOfCheckAttendanceHistory ? <motion.div className=" w-full h-[200px] bg-opacity-75"  initial={{opacity: 0}} animate={{opacity: 1}}>
                                         <div className="tablets:h-10 mobile-screen:h-2 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Check Attendance History</p></div>
                                             <div  className="tablets:h-[200px] mobile-screen:h-[250px] mt-4 w-full flex flex-col justify-between items-center ">
-                                                <motion.input onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number"/>
-                                                <motion.input onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Starting Date"/>
-                                                <motion.input onChange={handleChange} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Ending Date"/>
+                                                <motion.input name="matricNumber" onChange={handleHistoryinput} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number"/>
+                                                <motion.input name="startDate" onChange={handleHistoryinput} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Starting Date"/>
+                                                <motion.input name="endDate" onChange={handleHistoryinput} whileHover={{scale:1.03}} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Ending Date"/>
                                                
                                             </div>
 
