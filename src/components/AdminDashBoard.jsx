@@ -91,7 +91,8 @@ const AdminDashBoard = ()=> {
         })
     }
 
-    console.log(userData);
+    // console.log(userData);
+    console.log(historyData);
 
     const handleSubmitToRegisterStudent = async(e)=>{
         e.preventDefault()
