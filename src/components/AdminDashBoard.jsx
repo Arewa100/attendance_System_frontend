@@ -67,7 +67,7 @@ const AdminDashBoard = ()=> {
     }
 
     const studentHistoryDetails = {
-        matricNumber: "",
+        studentId: "",
         startDate: "",
         endDate: "",
     }
@@ -92,7 +92,7 @@ const AdminDashBoard = ()=> {
     }
 
     // console.log(userData);
-    console.log(historyData);
+    console.log(`this is the attendance history data ${historyData}`);
 
     const handleSubmitToRegisterStudent = async(e)=>{
         e.preventDefault()
