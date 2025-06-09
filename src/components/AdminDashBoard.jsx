@@ -122,8 +122,9 @@ const AdminDashBoard = ()=> {
           
       }
 
-    //    const handleSubmitForAttendanceHistory = async(e)=>{
-    //     e.preventDefault()
+       const handleSubmitForAttendanceHistory = async(e)=>{
+        e.preventDefault()
+        console.log("submit for attendance history is working");
     //        const postData = async (data) => {
     //     try {
     //       const response = await apiClient.get('staff/getAttendanceHistory/', data);
@@ -148,7 +149,7 @@ const AdminDashBoard = ()=> {
     //     }
     //   );
           
-    //   }
+      }
 
     return(
         <>
