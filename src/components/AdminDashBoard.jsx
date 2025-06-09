@@ -93,7 +93,7 @@ const AdminDashBoard = ()=> {
     }
 
     // console.log(userData);
-    console.log(historyData);
+    // console.log(historyData);
 
     const handleSubmitToRegisterStudent = async(e)=>{
         e.preventDefault()
@@ -125,29 +125,30 @@ const AdminDashBoard = ()=> {
        const handleSubmitForAttendanceHistory = async(e)=>{
         e.preventDefault()
         console.log("submit for attendance history is working");
-    //        const postData = async (data) => {
-    //     try {
-    //       const response = await apiClient.get('staff/getAttendanceHistory/', data);
-    //     //   console.log(response.data)
-    //       if(response.data) {
-    //         window.alert("fetching attendance history...")
+           const postData = async (data) => {
+            console.log(historyData);
+        try {
+          const response = await apiClient.post('staff/getAttendanceHistory/', data);
+        //   console.log(response.data)
+          if(response.data) {
+            window.alert("fetching attendance history...")
             
-    //       }
-    //     } catch (error) {
-    //       setMessage(error.response.data);
-    //     }
-    //   };
+          }
+        } catch (error) {
+          setMessage(error.response.data);
+        }
+      };
 
-    //   postData(historyData);
+      postData(historyData);
       
-    //   apiClient.interceptors.response.use(
-    //     response => response,
-    //     error => {
-    //       // console.error('Error response:', error);
-    //       // console.log(error)
-    //       return Promise.reject(error);
-    //     }
-    //   );
+      apiClient.interceptors.response.use(
+        response => response,
+        error => {
+          console.error('Error response:', error);
+          console.log(error)
+          return Promise.reject(error);
+        }
+      );
           
       }
 
