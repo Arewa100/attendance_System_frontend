@@ -131,7 +131,7 @@ const AdminDashBoard = ()=> {
           const response = await apiClient.post('staff/getAttendanceHistory/', data);
         //   console.log(response.data)
           if(response.data) {
-            window.alert(response.data.message);
+            console.log(response.data);
             
           }
         } catch (error) {
