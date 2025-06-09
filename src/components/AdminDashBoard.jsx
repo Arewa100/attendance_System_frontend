@@ -92,8 +92,8 @@ const AdminDashBoard = ()=> {
         })
     }
 
-    // console.log(userData);
-    console.log(`this is the attendance history data ${historyData}`);
+    console.log(`this is the user data ${userData}`);
+    // console.log(`this is the attendance history data ${historyData}`);
 
     const handleSubmitToRegisterStudent = async(e)=>{
         e.preventDefault()
