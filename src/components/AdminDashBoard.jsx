@@ -92,7 +92,7 @@ const AdminDashBoard = ()=> {
         })
     }
 
-    console.log(`this is the user data ${userData}`);
+    console.log(userData);
     // console.log(`this is the attendance history data ${historyData}`);
 
     const handleSubmitToRegisterStudent = async(e)=>{
