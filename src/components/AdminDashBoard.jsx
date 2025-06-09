@@ -71,15 +71,16 @@ const AdminDashBoard = ()=> {
         startDate: "",
         endDate: "",
     }
-    const [historyData, setHistoryData] = useState(studentHistoryDetails);
 
+    
+    const [historyData, setHistoryData] = useState(studentHistoryDetails);
     const [userData, setData] = useState(userDetails);
     const [message, setMessage] = useState("")
     
     function handleChange(event) {
         const { name, value } = event.target;
-        setData((preVData)=> {
-          return {...preVData, [name]:value}  
+        setData((prevData)=> {
+          return {...prevData, [name]:value}  
         })
     }
 
@@ -121,33 +122,33 @@ const AdminDashBoard = ()=> {
           
       }
 
-       const handleSubmitForAttendanceHistory = async(e)=>{
-        e.preventDefault()
-           const postData = async (data) => {
-        try {
-          const response = await apiClient.get('staff/getAttendanceHistory/', data);
-        //   console.log(response.data)
-          if(response.data) {
-            window.alert("fetching attendance history...")
+    //    const handleSubmitForAttendanceHistory = async(e)=>{
+    //     e.preventDefault()
+    //        const postData = async (data) => {
+    //     try {
+    //       const response = await apiClient.get('staff/getAttendanceHistory/', data);
+    //     //   console.log(response.data)
+    //       if(response.data) {
+    //         window.alert("fetching attendance history...")
             
-          }
-        } catch (error) {
-          setMessage(error.response.data);
-        }
-      };
+    //       }
+    //     } catch (error) {
+    //       setMessage(error.response.data);
+    //     }
+    //   };
 
-      postData(historyData);
+    //   postData(historyData);
       
-      apiClient.interceptors.response.use(
-        response => response,
-        error => {
-          // console.error('Error response:', error);
-          // console.log(error)
-          return Promise.reject(error);
-        }
-      );
+    //   apiClient.interceptors.response.use(
+    //     response => response,
+    //     error => {
+    //       // console.error('Error response:', error);
+    //       // console.log(error)
+    //       return Promise.reject(error);
+    //     }
+    //   );
           
-      }
+    //   }
 
     return(
         <>
