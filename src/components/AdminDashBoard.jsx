@@ -128,7 +128,7 @@ const AdminDashBoard = ()=> {
            const postData = async (data) => {
             console.log(historyData);
         try {
-          const response = await apiClient.post('staff/getAttendanceHistory/', data);
+          const response = await apiClient.get('staff/getAttendanceHistory/', data);
         //   console.log(response.data)
           if(response.data) {
             console.log(response.data);
