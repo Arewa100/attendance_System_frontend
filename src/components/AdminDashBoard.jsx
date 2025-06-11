@@ -108,7 +108,7 @@ const AdminDashBoard = () => {
         e.preventDefault();
         const downloadCsv = async (attendanceHistoryRequest) => {
             try {
-                const response = await apiClient.post('/api/v1/staff/exportAttendanceCsv/', attendanceHistoryRequest, {
+                const response = await apiClient.post('/staff/exportAttendanceCsv/', attendanceHistoryRequest, {
                     responseType: 'blob' // Important for handling binary data
                 });
 
