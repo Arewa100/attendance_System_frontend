@@ -15,6 +15,19 @@ const AdminDashBoard = () => {
     const [currentStateRegisterStudent, setState] = useState(false);
     const [currentStateOfCheckAttendanceHistory, setStateOfAttendanceHistory] = useState(false);
     const [cumulativeHistory, setCumulativeHistoryState] = useState(false);
+    const [historyData, setHistoryData] = useState({
+        studentId: "",
+        startDate: "",
+        endDate: "",
+    });
+    const [userData, setData] = useState({
+        firstName: "",
+        lastName: "",
+        matricNumber: "",
+        cardId: "",
+        department: "",
+        email: ""
+    });
     const [message, setMessage] = useState("");
 
     const handleClick = () => {
@@ -53,24 +66,6 @@ const AdminDashBoard = () => {
         });
     }
 
-    const userDetails = {
-        firstName: "",
-        lastName: "",
-        matricNumber: "",
-        cardId: "",
-        department: "",
-        email: ""
-    }
-
-    const studentHistoryDetails = {
-        studentId: "",
-        startDate: "",
-        endDate: "",
-    }
-
-    const [historyData, setHistoryData] = useState(studentHistoryDetails);
-    const [userData, setData] = useState(userDetails);
-
     function handleChange(event) {
         const { name, value } = event.target;
         setData((prevData) => {
@@ -78,7 +73,7 @@ const AdminDashBoard = () => {
         });
     }
 
-    const handleHistoryInput = (event) => {
+    const handleHistoryinput = (event) => {
         const { name, value } = event.target;
         setHistoryData((prevData) => {
             return { ...prevData, [name]: value };
@@ -94,11 +89,19 @@ const AdminDashBoard = () => {
                     window.alert("Student registered successfully");
                 }
             } catch (error) {
-                setMessage(error.response?.data || "An error occurred");
+                setMessage(error.response.data);
             }
         };
 
         postData(userData);
+
+        apiClient.interceptors.response.use(
+            response => response,
+            error => {
+                console.error('Error response:', error);
+                return Promise.reject(error);
+            }
+        );
     }
 
     const handleSubmitForAttendanceHistory = async (e) => {
@@ -109,11 +112,11 @@ const AdminDashBoard = () => {
                     responseType: 'blob' // Important for handling binary data
                 });
 
-                if (!response.status === 200) {
+                if (response.status !== 200) {
                     throw new Error('Failed to download CSV file');
                 }
 
-                const blob = await response.data;
+                const blob = response.data;
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -143,10 +146,10 @@ const AdminDashBoard = () => {
                                 <div className="bg-[#1F3A1F] tablets:h-[490px] tablets:w-full mobile-screen:w-full mobile-screen:h-[400px] bg-opacity-75 rounded-[12px]">
                                     <div className="h-6 w-full mt-2">
                                         <AnimatePresence>
-                                            {!currentStateRegisterStudent && !currentStateOfCheckAttendanceHistory && !cumulativeHistory ?
+                                            {!currentStateRegisterStudent != currentStateOfCheckAttendanceHistory != cumulativeHistory ?
                                                 <motion.button whileTap={{ scale: 0.2 }} onClick={handleCancelButton} className="tablets:ml-[570px] mobile-screen:ml-[290px] text-[#FDC800]">
-                                                    <svg className="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                                    <svg className="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                                     </svg>
                                                 </motion.button>
                                                 : null}
@@ -154,12 +157,12 @@ const AdminDashBoard = () => {
                                     </div>
                                     <div className="h-6 w-full">
                                         <AnimatePresence>
-                                            {currentStateRegisterStudent || currentStateOfCheckAttendanceHistory || cumulativeHistory ?
+                                            {currentStateRegisterStudent == currentStateOfCheckAttendanceHistory == cumulativeHistory ?
                                                 <motion.button whileTap={{ scale: 0.2 }} onClick={handleBackButton}>
                                                     <div className="h-10 absolute w-full flex justify-around text-red-600 text-[14px] font-medium"><p>{message}</p></div>
                                                     <div className="tablets:ml-[36px] mobile-screen:ml-[290px] text-[#FDC800]">
-                                                        <svg className="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                                        <svg className="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                                         </svg>
                                                     </div>
                                                 </motion.button>
@@ -168,7 +171,7 @@ const AdminDashBoard = () => {
                                     </div>
                                     <div className="absolute w-full">
                                         <AnimatePresence>
-                                            <form onSubmit={handleSubmitToRegisterStudent}>
+                                            <form action="#" onSubmit={handleSubmitToRegisterStudent}>
                                                 {currentStateRegisterStudent ? <motion.div className="w-full h-[200px] bg-opacity-75" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                                                     <div className="tablets:h-10 mobile-screen:h-2 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Register Student</p></div>
                                                     <div className="tablets:h-[300px] mobile-screen:h-[250px] mt-4 w-full flex flex-col justify-between items-center">
@@ -180,7 +183,7 @@ const AdminDashBoard = () => {
                                                         <motion.input name="email" onChange={handleChange} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Email" />
                                                     </div>
                                                     <div className="h-[42px] w-full mt-4 flex justify-around items-center">
-                                                        <Button textContent="submit" style="outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md" />
+                                                        <Button textContent="submit" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md" />
                                                     </div>
                                                 </motion.div> : null}
                                             </form>
@@ -188,16 +191,16 @@ const AdminDashBoard = () => {
                                     </div>
                                     <div className="absolute w-full">
                                         <AnimatePresence>
-                                            <form onSubmit={handleSubmitForAttendanceHistory}>
-                                                {currentStateOfCheckAttendanceHistory ? <motion.div className="w-full h-[200px] bg-opacity-75" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                                            <form action="#" onSubmit={handleSubmitForAttendanceHistory}>
+                                                {currentStateOfCheckAttendanceHistory ? <motion.div className=" w-full h-[200px] bg-opacity-75" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                                                     <div className="tablets:h-10 mobile-screen:h-2 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Check Attendance History</p></div>
                                                     <div className="tablets:h-[200px] mobile-screen:h-[250px] mt-4 w-full flex flex-col justify-between items-center">
-                                                        <motion.input name="studentId" onChange={handleHistoryInput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number" />
-                                                        <motion.input name="startDate" onChange={handleHistoryInput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="date" placeholder="Enter Attendance Starting Date" />
-                                                        <motion.input name="endDate" onChange={handleHistoryInput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="date" placeholder="Enter Attendance Ending Date" />
+                                                        <motion.input name="studentId" onChange={handleHistoryinput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number" />
+                                                        <motion.input name="startDate" onChange={handleHistoryinput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Starting Date" />
+                                                        <motion.input name="endDate" onChange={handleHistoryinput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Ending Date" />
                                                     </div>
                                                     <div className="h-[42px] w-full mt-10 flex justify-around items-center">
-                                                        <Button textContent="Download CSV" style="outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md" />
+                                                        <Button textContent="submit" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md" />
                                                     </div>
                                                 </motion.div> : null}
                                             </form>
@@ -205,26 +208,26 @@ const AdminDashBoard = () => {
                                     </div>
                                     <div className="absolute w-full">
                                         <AnimatePresence>
-                                            {cumOBJECTIVEiveHistory ? <motion.div className="w-full h-[200px] bg-opacity-75" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                                            {cumulativeHistory ? <motion.div className=" w-full h-[200px] bg-opacity-75" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                                                 <div className="tablets:h-10 mobile-screen:h-2 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Cumulative History</p></div>
                                                 <div className="tablets:h-[200px] mobile-screen:h-[250px] mt-4 w-full flex flex-col justify-between items-center">
-                                                    <motion.input name="studentId" onChange={handleHistoryInput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number" />
-                                                    <motion.input name="startDate" onChange={handleHistoryInput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="date" placeholder="Enter Attendance Starting Date" />
-                                                    <motion.input name="endDate" onChange={handleHistoryInput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="date" placeholder="Enter Attendance Ending Date" />
+                                                    <motion.input whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number" />
+                                                    <motion.input whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Starting Date" />
+                                                    <motion.input whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Ending Date" />
                                                 </div>
                                                 <div className="h-[42px] w-full mt-10 flex justify-around items-center">
-                                                    <Button textContent="submit" style="outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md" />
+                                                    <Button textContent="submit" style=" outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md" />
                                                 </div>
                                             </motion.div> : null}
                                         </AnimatePresence>
                                     </div>
                                     <div className="h-10 w-full font-medium text-[25px] font-roboto text-green-950"><p></p></div>
                                     <AnimatePresence>
-                                        {!currentStateRegisterStudent && !currentStateOfCheckAttendanceHistory && !cumulativeHistory ?
+                                        {!currentStateRegisterStudent != currentStateOfCheckAttendanceHistory != cumulativeHistory ?
                                             <motion.div className="h-[200px] mt-8 w-full flex flex-col justify-between items-center">
-                                                <Button onClick={() => handleClick()} textContent="Register Student" style="outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[17px] text-purple-200 text-opacity-65 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]" />
-                                                <Button onClick={() => handleClickForAttendanceHistory()} textContent="Check Attendance History" style="outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[17px] text-purple-200 text-opacity-65 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]" />
-                                                <Button onClick={() => handleClickForCumulativeHistory()} textContent="Cumulative History" style="outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[17px] text-purple-200 text-opacity-65 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]" />
+                                                <Button onClick={() => handleClick()} textContent="Register Student" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[17px] text-purple-200 text-opacity-65 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]" />
+                                                <Button onClick={() => handleClickForAttendanceHistory()} textContent="Check Attendance History" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[17px] text-purple-200 text-opacity-65 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]" />
+                                                <Button onClick={() => handleClickForCumulativeHistory()} textContent="Cumulative History" style=" outline-none tablets:w-[520px] mobile-screen:w-[300px] h-[40px] bg-[#FDC800] text-[17px] text-purple-200 text-opacity-65 font-roboto rounded-md shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md bg-[rgba(246,238,238,0.1)]" />
                                             </motion.div> : null}
                                     </AnimatePresence>
                                 </div>
