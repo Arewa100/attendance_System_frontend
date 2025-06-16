@@ -27,9 +27,6 @@ const AttendanceData = () => {
                                     Student Name: <span className="font-light">{studentName}</span>
                                 </p>
                                 <p className="font-semibold font-roboto">
-                                    Department: <span className="font-light">{department}</span>
-                                </p>
-                                <p className="font-semibold font-roboto">
                                     Attendance Starting Date: <span className="font-light">{startDate}</span>
                                 </p>
                                 <p className="font-semibold font-roboto">
