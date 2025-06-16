@@ -110,8 +110,9 @@ const AdminDashBoard = () => {
                 });
 
                 setAttendanceHistory(response.data);
+                console.log(data);
                 setMessage("Attendance history retrieved successfully");
-                navigate("/attendance-data", {
+                navigate("/attendance-record", {
                     state: {
                         attendanceData: response.data,
                         query: {
