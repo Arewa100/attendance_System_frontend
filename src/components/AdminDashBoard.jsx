@@ -83,9 +83,9 @@ const AdminDashBoard = () => {
                 if (!data.studentId || !data.startDate || !data.endDate) {
                     throw new Error("All fields are required");
                 }
-                const dateRegex = /^(\d{2})-(\d{2})-(\d{4})$/;
+                const dateRegex = /^(\d{2}):(\d{2}):(\d{4})$/;
                 if (!dateRegex.test(data.startDate) || !dateRegex.test(data.endDate)) {
-                    throw new Error("Dates must be in DD-MM-YYYY format (e.g., 12-03-2025)");
+                    throw new Error("Dates must be in DD:MM:YYYY format (e.g., 12:03:2025)");
                 }
                 const studentIdRegex = /^[A-Za-z0-9/]+$/;
                 if (!studentIdRegex.test(data.studentId)) {
@@ -189,8 +189,8 @@ const AdminDashBoard = () => {
                                                         <div className="tablets:h-10 mobile-screen:h-2 w-full flex justify-around text-[#FDC800] font-medium text-[25px]"><p>Check Attendance History</p></div>
                                                         <div className="tablets:h-[200px] mobile-screen:h-[250px] mt-4 w-full flex flex-col justify-between items-center">
                                                             <motion.input name="studentId" value={historyData.studentId} onChange={handleHistoryinput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Student Matric-Number" required />
-                                                            <motion.input name="startDate" value={historyData.startDate} onChange={handleHistoryinput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Starting Date (DD-MM-YYYY)" required />
-                                                            <motion.input name="endDate" value={historyData.endDate} onChange={handleHistoryinput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Ending Date (DD-MM-YYYY)" required />
+                                                            <motion.input name="startDate" value={historyData.startDate} onChange={handleHistoryinput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Starting Date (DD:MM:YYYY)" required />
+                                                            <motion.input name="endDate" value={historyData.endDate} onChange={handleHistoryinput} whileHover={{ scale: 1.03 }} className="tablets:w-[520px] h-[40px] rounded-md p-4 outline-none font-roboto shadow-md bg-[rgba(246,238,238,0.1)] text-purple-200" type="text" placeholder="Enter Attendance Ending Date (DD:MM:YYYY)" required />
                                                         </div>
                                                         <div className="h-[42px] w-full mt-10 flex justify-around items-center">
                                                             <Button textContent="submit" style="outline-none h-[42px] w-[150px] bg-[#FDC800] text-[17px] text-[#1F3A1F] font-roboto rounded-[12px] shadow-sm font-medium hover:bg-[#1F3A1F] hover:text-[#FDC800] transition duration-[0.1s] shadow-md" />
