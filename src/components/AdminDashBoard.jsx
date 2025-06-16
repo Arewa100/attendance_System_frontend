@@ -103,7 +103,7 @@ const AdminDashBoard = () => {
                 setAttendanceHistory(response.data); // Store the response data
                 setMessage("Attendance history retrieved successfully");
                 // Navigate to AttendanceData page with data
-                navigate('/attendance-data', {
+                navigate('/attendance-record', {
                     state: {
                         attendanceData: response.data,
                         query: {
