@@ -105,7 +105,7 @@ const AdminDashBoard = ()=> {
             
           }
         } catch (error) {
-          setMessage(error.response.data);
+          setMessage(error.response.data.message);
         }
       };
 
@@ -135,7 +135,7 @@ const AdminDashBoard = ()=> {
             
           }
         } catch (error) {
-          setMessage(error.response.data);
+          setMessage(error.response.data.message);
         }
       };
 
