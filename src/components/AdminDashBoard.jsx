@@ -122,35 +122,46 @@ const AdminDashBoard = ()=> {
           
       }
 
-       const handleSubmitForAttendanceHistory = async(e)=>{
-        e.preventDefault()
-        console.log("submit for attendance history is working");
-           const postData = async (data) => {
-            console.log(historyData);
+  const handleSubmitForAttendanceHistory = async (e) => {
+    e.preventDefault();
+    console.log("submit for attendance history is working");
+    const getAttendanceHistory = async (data) => {
+        console.log(historyData);
         try {
-          const response = await apiClient.get('staff/getAttendanceHistory/', data);
-        //   console.log(response.data)
-          if(response.data) {
-            console.log(response.data);
-            
-          }
-        } catch (error) {
-          setMessage(error.response.data.message);
-        }
-      };
+            // Validate inputs
+            if (!data.studentId || !data.startDate || !data.endDate) {
+                throw new Error("All fields are required");
+            }
+            // Validate date format (DD-MM-YYYY)
+            const dateRegex = /^(\d{2})-(\d{2})-(\d{4})$/;
+            if (!dateRegex.test(data.startDate) || !dateRegex.test(data.endDate)) {
+                throw new Error("Dates must be in DD-MM-YYYY format (e.g., 12-03-2025)");
+            }
+            // Validate studentId format (allows letters, numbers, and slashes)
+            const studentIdRegex = /^[A-Za-z0-9/]+$/;
+            if (!studentIdRegex.test(data.studentId)) {
+                throw new Error("Invalid student ID format");
+            }
 
-      postData(historyData);
-      
-      apiClient.interceptors.response.use(
-        response => response,
-        error => {
-          console.error('Error response:', error);
-          console.log(error)
-          return Promise.reject(error);
+            const response = await apiClient.get('staff/getAttendanceHistory', {
+                params: {
+                    studentId: data.studentId,
+                    startDate: data.startDate,
+                    endDate: data.endDate
+                }
+            });
+
+            console.log(response.data);
+            setMessage("Attendance history retrieved successfully");
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || "Error retrieving attendance history";
+            setMessage(errorMessage);
+            console.error('Error response:', error);
         }
-      );
-          
-      }
+    };
+
+    getAttendanceHistory(historyData);
+};
 
     return(
         <>
