@@ -7,9 +7,6 @@ const AttendanceData = () => {
     const { attendanceData = [], query = {} } = state || {};
     const { studentId = "Unknown", studentName = "Unknown", startDate = "Unknown", endDate = "Unknown" } = query;
 
-    // Placeholder for department (fetch from API if needed)
-    const department = "Mechanical Engineering"; // Replace with API call if department is stored elsewhere
-
     return (
         <>
             <div className="xl:max-w-[1440px] m-auto min-h-screen flex flex-col">
