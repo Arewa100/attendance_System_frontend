@@ -84,7 +84,7 @@ const AdminDashBoard = () => {
         e.preventDefault();
         const postData = async (data) => {
             try {
-                const response = await apiClient.post('staff/registerStudent/', data);
+                const response = await apiClient.post('/staff/registerStudent/', data);
                 if (response.data.message === "Student registered successfully") {
                     window.alert("Student registered successfully");
                 }
@@ -117,14 +117,15 @@ const AdminDashBoard = () => {
                 }
 
                 const blob = response.data;
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'attendance_history.csv';
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-                window.URL.revokeObjectURL(url);
+                console.log(blob);
+                // const url = window.URL.createObjectURL(blob);
+                // const a = document.createElement('a');
+                // a.href = url;
+                // a.download = 'attendance_history.csv';
+                // document.body.appendChild(a);
+                // a.click();
+                // a.remove();
+                // window.URL.revokeObjectURL(url);
             } catch (error) {
                 setMessage(error.response?.data || 'Error downloading CSV file');
                 console.error('Error downloading CSV file:', error);
